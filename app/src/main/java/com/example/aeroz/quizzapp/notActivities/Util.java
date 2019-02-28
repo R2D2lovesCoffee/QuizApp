@@ -3,6 +3,8 @@ package com.example.aeroz.quizzapp.notActivities;
 import java.util.List;
 
 public class Util {
+    public static final String serverIP = "188.25.213.120";
+    public static final String serverPort = "8000";
     public static Quiz getQuizById(int id,List<Quiz> quizes){
         for(Quiz q:quizes)
             if(q.getId()==id)

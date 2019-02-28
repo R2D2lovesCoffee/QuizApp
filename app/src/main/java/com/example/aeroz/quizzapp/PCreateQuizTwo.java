@@ -18,6 +18,7 @@ import com.example.aeroz.quizzapp.notActivities.Question;
 import com.example.aeroz.quizzapp.notActivities.Quiz;
 import com.example.aeroz.quizzapp.notActivities.QuizDB;
 import com.example.aeroz.quizzapp.notActivities.Teacher;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -62,7 +63,7 @@ public class PCreateQuizTwo extends AppCompatActivity {
                     textViewCode.setText(""+(lastQuiz.getCode()+1));
 
                 }
-            }.execute("GET","http://188.25.199.62:8000/lastQuiz");
+            }.execute("GET",String.format("http://%s:%s/lastQuiz", Util.serverIP,Util.serverPort));
         }
         else{
             privat.setChecked(quiz.isPrivat());
@@ -82,7 +83,7 @@ public class PCreateQuizTwo extends AppCompatActivity {
                     quiz.setPrivat(privat.isChecked());
                     if(index!=-1){
                         teacher.getQuizes().set(teacher.getIndexOfQuiz(quiz.getCode()),quiz);
-                        new HttpRequestMaker().execute("POST","http://188.25.199.62:8000/updateQuizes/"+quiz.getId(),convertQuizToJson(quiz,teacher.getId()).toString());
+                        new HttpRequestMaker().execute("POST",String.format("http://%s:%s/updateQuizes/",Util.serverIP,Util.serverPort)+quiz.getId(),convertQuizToJson(quiz,teacher.getId()).toString());
                         startActivity(new Intent(PCreateQuizTwo.this,PProfileActivity.class).putExtra("teacher",teacher));
                     }
                     else{
@@ -98,9 +99,9 @@ public class PCreateQuizTwo extends AppCompatActivity {
                                         teacher.getQuizes().add(quiz);
                                         startActivity(new Intent(PCreateQuizTwo.this,PProfileActivity.class).putExtra("teacher",teacher));
                                     }
-                                }.execute("GET","http://188.25.199.62:8000/quizes/?code="+quiz.getCode());
+                                }.execute("GET",String.format("http://%s:%s/quizes/?code=",Util.serverIP,Util.serverPort)+quiz.getCode());
                             }
-                        }.execute("POST","http://188.25.199.62:8000/quizes",convertQuizToJson(quiz,teacher.getId()).toString());
+                        }.execute("POST",String.format("http://%s:%s/quizes",Util.serverIP,Util.serverPort),convertQuizToJson(quiz,teacher.getId()).toString());
                     }
                 }
                     catch(Exception e){

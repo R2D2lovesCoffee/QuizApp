@@ -16,6 +16,7 @@ import com.example.aeroz.quizzapp.notActivities.Quiz;
 import com.example.aeroz.quizzapp.notActivities.Student;
 import com.example.aeroz.quizzapp.notActivities.TakenQuiz;
 import com.example.aeroz.quizzapp.notActivities.TakenQuizDB;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -71,7 +72,7 @@ public class SQuizPreviewActivity extends AppCompatActivity {
                             Log.d("testolini", "onPostExecute: "+takenQuizDB);
                             if(takenQuizDB.getRemainingTries()!=0){
                                 takenQuizDB.takeTry();
-                                new HttpRequestMaker().execute("POST","http://188.25.199.62:8000/takenQuizes",new Gson().toJson(takenQuizDB));
+                                new HttpRequestMaker().execute("POST",String.format("http://%s:%s/takenQuizes", Util.serverIP,Util.serverPort),new Gson().toJson(takenQuizDB));
                                 startActivity(new Intent(SQuizPreviewActivity.this,SQuestionActivity.class)
                                         .putExtra("student",student).putExtra("quiz",quiz).putExtra("takenQuizDB",takenQuizDB)
                                 .putExtra("creator",creator));
@@ -81,12 +82,12 @@ public class SQuizPreviewActivity extends AppCompatActivity {
                             }
                         }
                         else{
-                            new HttpRequestMaker().execute("POST","http://188.25.199.62:8000/takenQuizes",new Gson()
+                            new HttpRequestMaker().execute("POST",String.format("http://%s:%s/takenQuizes",Util.serverIP,Util.serverPort),new Gson()
                                     .toJson(new TakenQuizDB(0,2,student.getId(),quiz.getId())));
                         }
 
                     }
-                }.execute("GET","http://188.25.199.62:8000/takenQuizes/?studentId="+student.getId()+"&quizId="+quiz.getId());
+                }.execute("GET",String.format("http://%s:%s/takenQuizes/?studentId=",Util.serverIP,Util.serverPort)+student.getId()+"&quizId="+quiz.getId());
             }
         });
 

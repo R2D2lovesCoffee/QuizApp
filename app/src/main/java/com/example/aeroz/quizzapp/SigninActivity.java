@@ -19,6 +19,7 @@ import com.example.aeroz.quizzapp.notActivities.EmailPassword;
 import com.example.aeroz.quizzapp.notActivities.HttpRequestMaker;
 import com.example.aeroz.quizzapp.notActivities.Student;
 import com.example.aeroz.quizzapp.notActivities.Teacher;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 public class SigninActivity extends AppCompatActivity {
@@ -75,7 +76,7 @@ public class SigninActivity extends AppCompatActivity {
                                 startActivity(new Intent(SigninActivity.this,SHomeActivity.class).putExtra("student",student));
                             }
                         };
-                        httpRequestMaker.execute("POST","http://188.25.199.62:8000/login/student",new Gson().toJson(emailPassword));
+                        httpRequestMaker.execute("POST",String.format("http://%s:%s/login/student", Util.serverIP,Util.serverPort),new Gson().toJson(emailPassword));
                     }
                     else if(email.contains("@prof.ase.ro")){
                         httpRequestMaker = new HttpRequestMaker(){
@@ -86,7 +87,7 @@ public class SigninActivity extends AppCompatActivity {
                                 startActivity(new Intent(SigninActivity.this,PHomeActivity.class).putExtra("teacher",teacher));
                             }
                         };
-                        httpRequestMaker.execute("POST","http://188.25.199.62:8000/login/teacher",new Gson().toJson(emailPassword));
+                        httpRequestMaker.execute("POST",String.format("http://%s:%s/login/teacher",Util.serverIP,Util.serverPort),new Gson().toJson(emailPassword));
                     }
                     else{
                         Toast.makeText(SigninActivity.this,R.string.signintoastinstitutional,Toast.LENGTH_LONG).show();

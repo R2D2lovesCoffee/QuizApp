@@ -18,6 +18,7 @@ import com.example.aeroz.quizzapp.notActivities.Quiz;
 import com.example.aeroz.quizzapp.notActivities.Student;
 import com.example.aeroz.quizzapp.notActivities.TakenQuiz;
 import com.example.aeroz.quizzapp.notActivities.TakenQuizDB;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -141,7 +142,7 @@ public class SQuestionActivity extends AppCompatActivity {
                     student.setTakenQuizes(tqs);
 
                     Log.d("yeyeye", "onClick: ");
-                    new HttpRequestMaker().execute("POST","http://188.25.199.62:8000/takenQuizes",
+                    new HttpRequestMaker().execute("POST",String.format("http://%s:%s/takenQuizes", Util.serverIP,Util.serverPort),
                             new Gson().toJson(takenQuizDB));
                     countDownTimer.cancel();
                     SQuestionActivity.this.finish();

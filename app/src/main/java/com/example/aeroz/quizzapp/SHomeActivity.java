@@ -19,6 +19,7 @@ import com.example.aeroz.quizzapp.notActivities.HttpRequestMaker;
 import com.example.aeroz.quizzapp.notActivities.Quiz;
 import com.example.aeroz.quizzapp.notActivities.QuizAdapter;
 import com.example.aeroz.quizzapp.notActivities.Student;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ public class SHomeActivity extends AppCompatActivity {
                                         .putExtra("quiz",quiz).putExtra("student",student).putExtra("creator",creator));
                             }
                         }
-                                .execute("POST","http://188.25.199.62:8000/teacherName",new Gson().toJson(quiz));
+                                .execute("POST",String.format("http://%s:%s/teacherName", Util.serverIP,Util.serverPort),new Gson().toJson(quiz));
 
                     }
                 });
@@ -93,14 +94,14 @@ public class SHomeActivity extends AppCompatActivity {
                                                 startActivity(new Intent(SHomeActivity.this,SQuizPreviewActivity.class)
                                                         .putExtra("student",student).putExtra("quiz",quiz).putExtra("creator",creator));
                                             }
-                                        }.execute("POST","http://188.25.199.62:8000/teacherName",new Gson().toJson(quiz));
+                                        }.execute("POST",String.format("http://%s:%s/teacherName",Util.serverIP,Util.serverPort),new Gson().toJson(quiz));
 
                                     }
                                     catch(Exception e){
                                         Toast.makeText(SHomeActivity.this,R.string.shomeincorrectcode,Toast.LENGTH_LONG).show();
                                     }
                                 }
-                            }.execute("GET","http://188.25.199.62:8000/quizes/?code="+code);
+                            }.execute("GET",String.format("http://%s:%s/quizes/?code=",Util.serverIP,Util.serverPort)+code);
                         }
                         catch(Exception e){
                             Toast.makeText(SHomeActivity.this, "the code is not valid :(", Toast.LENGTH_SHORT).show();
@@ -110,7 +111,7 @@ public class SHomeActivity extends AppCompatActivity {
                 });
             }
         };
-        httpRequestMaker.execute("GET","http://188.25.199.62:8000/quizes/?privat=0");
+        httpRequestMaker.execute("GET",String.format("http://%s:%s/quizes/?privat=0",Util.serverIP,Util.serverPort));
 
 
         whyNeedCode.setOnClickListener(new View.OnClickListener() {

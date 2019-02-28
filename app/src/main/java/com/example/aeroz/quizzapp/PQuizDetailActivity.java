@@ -13,6 +13,7 @@ import com.example.aeroz.quizzapp.notActivities.HttpRequestMaker;
 import com.example.aeroz.quizzapp.notActivities.Quiz;
 import com.example.aeroz.quizzapp.notActivities.TakenQuizDB;
 import com.example.aeroz.quizzapp.notActivities.Teacher;
+import com.example.aeroz.quizzapp.notActivities.Util;
 import com.google.gson.Gson;
 
 public class PQuizDetailActivity extends AppCompatActivity {
@@ -58,7 +59,7 @@ public class PQuizDetailActivity extends AppCompatActivity {
                 quiz_no_questions.setText(String.valueOf(quiz.getQuestions().size()));
                 quiz_no_commits.setText(String.valueOf(n));
             }
-        }.execute("GET","http://188.25.199.62:8000/takenQuizes/?quizId="+quiz.getId());
+        }.execute("GET",String.format("http://%s:%s/takenQuizes/?quizId=", Util.serverIP,Util.serverPort)+quiz.getId());
 
         ic_back.setOnClickListener(new View.OnClickListener() {
             @Override
